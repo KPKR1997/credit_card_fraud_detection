@@ -3,12 +3,13 @@ import sys
 
 from src.exception import CustomException
 from src.logger import logging
-from configuration import config
+
 
 
 from src.components.data_ingestion import DataIngestion
 from src.components.data_validation import DataValidation
 from src.components.data_transformation import DataTransformation
+from src.components.model_training import ModelTraining
 
 
 def main():
@@ -21,8 +22,12 @@ def main():
             ingestion.split_train_test(custom_validated_data)
 
             transformation = DataTransformation()
-            transformation.make_transformer()
-            transformation.initiate_data_transformation()
+            train, test, _ = transformation.initiate_data_transformation()
+            training = ModelTraining()
+            best_model, test_score = training.initiate_model_training(train, test)
+
+            print(best_model, test_score)
+
         except Exception as e:
             raise CustomException(e,sys)
 

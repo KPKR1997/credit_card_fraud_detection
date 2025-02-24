@@ -2,6 +2,8 @@
 import os
 import sys
 import pandas as pd
+from scipy.sparse import csr_matrix, issparse
+import numpy as np
 
 from dataclasses import dataclass
 
@@ -13,7 +15,7 @@ from sklearn.pipeline import Pipeline
 from src.utils import save_object, load_object
 from src.exception import CustomException
 from src.logger import logging
-from src.components.data_ingestion import DataIngestionConfig
+
 
 
 #take train, test data from artifacts
@@ -25,12 +27,11 @@ class DataTransformationConfig:
 
 class DataTransformation():
     def __init__(self):
-        self.path = DataTransformationConfig()
-
-    logging.info('Building data preprocessing transformer object')   
+        self.path = DataTransformationConfig() 
 
     def make_transformer(self):
-        try: 
+        try:
+            logging.info('Building data preprocessing transformer object')  
             numerical_columns = ['time', 'amount', 'age']
             categorical_columns = ['day', 'card_type', 'entry_mode',
                             'transaction_type', 'merchant', 'country_of_transaction',
@@ -68,6 +69,9 @@ class DataTransformation():
             self.data_path = DataTransformationConfig()
             test_data = pd.read_csv(self.data_path.test_path)
             train_data = pd.read_csv(self.data_path.train_path)
+
+            logging.info('Imported train and test data, preparing for scaling and encoding')
+
             preprocessor = self.make_transformer()
 
             target_column_name = 'fraud'
@@ -81,24 +85,33 @@ class DataTransformation():
             feature_train_arr = preprocessor.fit_transform(feature_train)
             feature_test_arr = preprocessor.transform(feature_test)
 
-            print(type(feature_test_arr))
+            if issparse(feature_test_arr):
+                feature_test_arr = feature_test_arr.toarray()
+                feature_train_arr = feature_train_arr.toarray()
 
-            logging.info('Imported and preparing train and test data for scaling and encoding')
+            train_arr = np.c_[
+                feature_train_arr, np.array(target_train)
+            ]
+            test_arr = np.c_[
+                feature_test_arr, np.array(target_test)
+            ]
+            
+            logging.info('Saving preprocessor file in artifacts')
+
+            save_object(
+                file_path = self.data_path.preprocessor_file_path,
+                obj=preprocessor
+            )
+            logging.info('Successfully completed data transformation processing')
+            return(
+                train_arr,
+                test_arr,
+                self.data_path.preprocessor_file_path
+            )
+            
+            
         except Exception as e:
             raise CustomException(e,sys)
 
 
        
-
-    
-#seperate it as features and target
-
-#seperate categorical and numerical features in train and test data
-
-#Pipeline test, train features via Onehot encoding and standardscalar transformations using preprocessor.pkl file
-
-#Convert data to np_array
-
-#concat feature array and target array for test and train data
-
-#return train_arr and test_arr

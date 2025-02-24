@@ -5,5 +5,8 @@ matplotlib
 seaborn
 logger
 dataclasses
+scipy
+xgboost
+streamlit
 
 #-e .

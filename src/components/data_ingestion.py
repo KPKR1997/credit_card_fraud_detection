@@ -11,11 +11,6 @@ from configuration import config
 from src.components.data_validation import DataValidation
 
 
-
-
-
-#Load raw CSV data
-
 @dataclass
 class DataIngestionConfig:
     raw_data_path: str=os.path.join('data',config.CSV_NAME)

@@ -5,7 +5,6 @@ import numpy as np
 
 from src.exception import CustomException
 from src.logger import logging
-from configuration import config
 
 
 class DataValidation:
