@@ -8,5 +8,6 @@ dataclasses
 scipy
 xgboost
 streamlit
+dill
 
 #-e .
