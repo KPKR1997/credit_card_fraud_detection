@@ -36,7 +36,7 @@ class ModelTraining:
 
             models = {
                 'Random Forest': RandomForestClassifier(),
-                # 'Gradient boost': GradientBoostingClassifier(),
+                'Gradient boost': GradientBoostingClassifier(),
                 'Logistic Regression': LogisticRegression(),
                 'Decision tree': DecisionTreeClassifier()
             }
@@ -47,11 +47,11 @@ class ModelTraining:
                     'max_depth': [None, 10, 20],
                     'min_samples_split': [2, 5, 10]
                 },
-                # 'Gradient boost': {
-                #     'n_estimators': [50, 100, 200],
-                #     'learning_rate': [0.01, 0.1, 0.2],
-                #     'max_depth': [3, 5, 10]
-                # },
+                'Gradient boost': {
+                    'n_estimators': [50, 100, 200],
+                    'learning_rate': [0.01, 0.1, 0.2],
+                    'max_depth': [3, 5, 10]
+                },
                 'Logistic Regression': {
                     'C': [0.01, 0.1, 1, 10],
                     'solver': ['liblinear', 'lbfgs']
@@ -79,7 +79,7 @@ class ModelTraining:
                 grid_search = GridSearchCV(
                     estimator=model,
                     param_grid=param_grids[name],
-                    cv=2,
+                    cv=5,
                     scoring=scoring,  
                     refit='AUC-ROC', 
                     n_jobs=-1,

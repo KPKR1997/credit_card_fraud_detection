@@ -12,7 +12,7 @@ from src.components.data_transformation import DataTransformation
 from src.components.model_training import ModelTraining
 
 
-def main():
+def pipeline():
         try:
             ingestion = DataIngestion()
             ingestion_data = ingestion.initiate_data_ingestion()
@@ -35,4 +35,4 @@ def main():
 
       
 if __name__ == '__main__':
-    main()
+    pipeline()
