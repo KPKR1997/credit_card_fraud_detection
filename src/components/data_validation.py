@@ -26,7 +26,7 @@ class DataValidation:
             data = data.drop(columns=['Transaction ID', 'Date'])
             data.columns = ['day', 'time', 'card_type', 'entry_mode', 'amount',
                             'transaction_type', 'merchant', 'country_of_transaction',
-                            'shipping_addres', 'residence', 'gender', 'age', 'bank', 'fraud']
+                            'shipping_address', 'residence', 'gender', 'age', 'bank', 'fraud']
             logging.info('Validation and cleaning completed successfully')
             return data
         except Exception as e:

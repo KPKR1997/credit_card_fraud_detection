@@ -14,31 +14,31 @@ day_of_week = st.selectbox('Day of week transaction done', ['Monday', 'Tuesday',
 
 time = st.number_input('Time of transaction: (in 0-23)', min_value=0, max_value=23, step=1)
 
-card_type = st.selectbox('Card Type', ['Visa' 'MasterCard'])
+card_type = st.selectbox('Card Type', ['Visa', 'MasterCard'])
 
 entry_mode = st.selectbox('Entry Mode', ['Tap', 'PIN', 'CVC'])
 
 amount = st.number_input('Transaction Amount', min_value=0.0, step=0.01)
 
-transaction_type = st.selectbox('Transaction Type', ['Purchase', 'Refund', 'Transfer'])
+transaction_type = st.selectbox('Transaction Type', ['POS', 'Online', 'ATM'])
 
-merchant = st.selectbox('Merchant', ['Entertainment' 'Services' 'Restaurant' 'Electronics' 'Children'
- 'Fashion' 'Food' 'Products' 'Subscription' 'Gaming'])
+merchant = st.selectbox('Merchant', ['Entertainment', 'Services', 'Restaurant', 'Electronics', 'Children',
+ 'Fashion', 'Food', 'Products', 'Subscription', 'Gaming'])
 
-country_of_transaction = st.selectbox('Country of Transaction', ['United Kingdom' 'USA' 'India' 'Russia' 'China'])
+country_of_transaction = st.selectbox('Country of Transaction', ['United Kingdom', 'USA', 'India', 'Russia', 'China'])
 
-shipping_address = st.selectbox('Shipping Address Country', ['United Kingdom' 'USA' 'India' 'Russia' 'China'])
+shipping_address = st.selectbox('Shipping Address Country', ['United Kingdom', 'USA', 'India', 'Russia', 'China'])
 
-residence =  st.selectbox('Country of Rseidence', ['United Kingdom' 'USA' 'India' 'Russia' 'China'])
+residence =  st.selectbox('Country of Rseidence', ['United Kingdom', 'USA', 'India', 'Russia', 'China'])
 
 gender = st.radio('Gender', ['M', 'F'])
 
 age = st.number_input('Age', min_value=0, max_value=100, step=1)
 
-bank = st.selectbox('Bank', ['RBS' 'Lloyds' 'Barclays' 'Halifax' 'Monzo' 'HSBC' 'Metro' 'Barlcays'])
+bank = st.selectbox('Bank', ['RBS', 'Lloyds', 'Barclays', 'Halifax', 'Monzo', 'HSBC', 'Metro', 'Barlcays'])
 
 input_data = {
-    'day_of_week': [day_of_week],
+    'day': [day_of_week],
     'time': [time],
     'card_type': [card_type],
     'entry_mode': [entry_mode],
@@ -55,7 +55,6 @@ input_data = {
 
 df = pd.DataFrame(input_data)
 
-st.write(df)
 
 def predict():
     try:
@@ -68,12 +67,19 @@ def predict():
 
         prediction = model.predict(data)
 
-        st.write(prediction)
+        return prediction
 
     except Exception as e:
         raise CustomException(e,sys)
+    
 
-st.button(label = 'Predict', on_click = predict)
 
+if st.button(label = 'Predict'):
+    val = predict()
+    if val == 1:
+        st.warning("Transaction seems to be Fraud")
+    else:
+        st.success('Transaction seems to be Legit')
+    
 
     

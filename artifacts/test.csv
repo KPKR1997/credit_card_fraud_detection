@@ -1,4 +1,4 @@
-day,time,card_type,entry_mode,amount,transaction_type,merchant,country_of_transaction,shipping_addres,residence,gender,age,bank,fraud
+day,time,card_type,entry_mode,amount,transaction_type,merchant,country_of_transaction,shipping_address,residence,gender,age,bank,fraud
 Wednesday,18,Visa,Tap,14.0,POS,Children,United Kingdom,United Kingdom,United Kingdom,F,52.9,Barclays,0
 Wednesday,11,Visa,PIN,23.0,ATM,Services,United Kingdom,United Kingdom,United Kingdom,F,47.2,Barclays,0
 Tuesday,9,Visa,Tap,22.0,POS,Food,China,China,United Kingdom,F,37.5,Metro,1

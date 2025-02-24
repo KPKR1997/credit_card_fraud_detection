@@ -35,7 +35,7 @@ class DataTransformation():
             numerical_columns = ['time', 'amount', 'age']
             categorical_columns = ['day', 'card_type', 'entry_mode',
                             'transaction_type', 'merchant', 'country_of_transaction',
-                            'shipping_addres', 'residence', 'gender', 'bank']
+                            'shipping_address', 'residence', 'gender', 'bank']
 
             pipeline_numerical = Pipeline(
                 steps=[
