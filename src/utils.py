@@ -33,7 +33,7 @@ def load_object(file_path):
 def call_mysql(db, table, q):
     try:
         engine = create_engine(f"mysql+pymysql://{config.USER}:{config.PASSWORD}@{config.HOST}:{config.PORT}/{db}")
-        if q == 0:
+        if q == '*':
             query = f"SELECT * FROM {table};"
         else:
             query = q

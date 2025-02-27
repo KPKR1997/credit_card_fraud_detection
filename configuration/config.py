@@ -1,4 +1,4 @@
-#MySQL
+#MySQL - DB Connection
 
 HOST = "sql12.freesqldatabase.com"
 PORT = 3306
