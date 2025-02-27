@@ -5,8 +5,10 @@ import numpy as np
 import pandas as pd
 import dill
 from sklearn.metrics import r2_score
+from sqlalchemy import create_engine
 
 from src.exception import CustomException
+import configuration.config as config
 
 
 
@@ -28,27 +30,15 @@ def load_object(file_path):
         raise CustomException(e,sys)
     
 
-def evaluate_models(x_train, y_train, x_test, y_test, models):
+def call_mysql(db, table, q):
     try:
-        report = {}
-
-        for i in range(len(list(models))):
-
-            model = list(models.values())[i]
-
-            model.fit(x_train, y_train)
-
-            y_train_pred = model.predict(x_train)
-
-            y_test_pred = model.predict(x_test)
-
-            train_model_score = r2_score(y_train, y_train_pred)
-
-            test_model_score = r2_score(y_test, y_test_pred)
-
-            report[list(models.keys())[i]] = test_model_score
-
-        return report
-
+        engine = create_engine(f"mysql+pymysql://{config.USER}:{config.PASSWORD}@{config.HOST}:{config.PORT}/{db}")
+        if q == 0:
+            query = f"SELECT * FROM {table};"
+        else:
+            query = q
+        data_raw = pd.read_sql(query, engine)
+        data = pd.DataFrame(data_raw)
+        return data
     except Exception as e:
-        raise CustomException(e,sys)
+        print(f"Error collecting data: {e}")

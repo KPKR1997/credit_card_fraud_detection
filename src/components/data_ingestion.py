@@ -9,11 +9,11 @@ from src.exception import CustomException
 from src.logger import logging
 from configuration import config
 from src.components.data_validation import DataValidation
+from src.utils import call_mysql
 
 
 @dataclass
 class DataIngestionConfig:
-    raw_data_path: str=os.path.join('data',config.CSV_NAME)
     train_data_path: str=os.path.join('artifacts',"train.csv")
     test_data_path: str=os.path.join('artifacts',"test.csv")
 
@@ -24,7 +24,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info('Initiated CSV file loading')
         try:
-            data = pd.read_csv(self.ingestion_config.raw_data_path)
+            data = call_mysql(config.DB, config.TABLE,'*')
             return data
         except Exception as e:
             raise CustomException(e,sys)

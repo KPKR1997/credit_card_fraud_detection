@@ -9,5 +9,8 @@ scipy
 xgboost
 streamlit
 dill
+sqlalchemy
+pymysql
+
 
 #-e .
