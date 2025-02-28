@@ -10,7 +10,7 @@ st.title("Credit card fraud detection")
 st.header('Input values')
 
 
-day_of_week = st.selectbox('Day of week transaction done', ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+day_of_week = st.selectbox('Day of week transaction done', ['Tuesday', 'Wednesday', 'Thursday', 'Friday'])
 
 time = st.number_input('Time of transaction: (in 0-23)', min_value=0, max_value=23, step=1)
 
